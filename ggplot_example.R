@@ -43,4 +43,29 @@ ggplot(d2, aes(carat, price, color = color))+geom_point()
 library(MASS)
 ggplot(birthwt, aes(factor(race), bwt)) + geom_boxplot()
 
+#if you summary a ggplot (transformed into an object) it will show the settings that were used
+myplot <- ggplot(birthwt, aes(factor(race), bwt)) + geom_boxplot()
+summary (myplot)
+
+#facet_grid  you can stack graphs with a common axis
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species))+geom_point() +
+  facet_grid(Species ~ .)
+
+ggplot(iris, aes(Sepal.Length, Sepal.Width, color=Species))+geom_point() +
+  facet_wrap(~Species)
+
+#using a pallete of colors
+## dodge groups data by species; 
+library("reshape2")
+df  <- melt(iris, id.vars = "Species")
+ggplot(df, aes(Species, value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_brewer(palette = "Set1")
+
+# defining colors for the bar graphs above -- 
+## scale_color_manual(values = c(red, green, yellow))
+ggplot(df, aes(Species, value, fill = variable)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_color_manual(values = c("red", "green", "yellow", "blue"))
+### double check the above from class notes
 
